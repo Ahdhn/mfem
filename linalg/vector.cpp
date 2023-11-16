@@ -1246,7 +1246,9 @@ double Vector::Min() const
    if (Device::Allows(Backend::OMP_MASK))
    {
       double minimum = m_data[0];
+#ifndef _WIN32
       #pragma omp parallel for reduction(min:minimum)
+#endif
       for (int i = 0; i < size; i++)
       {
          minimum = std::min(minimum, m_data[i]);
